@@ -2,8 +2,9 @@ const mongoose = require('mongoose')
 
 
 const userSchema = new mongoose.Schema({
-    userAcc: String,
+    userAcc: {type:String},
     groupId: String,
+    scheme : String
 })
 
 userSchema.set('toJSON', {
