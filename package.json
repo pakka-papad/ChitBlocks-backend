@@ -18,7 +18,7 @@
   "homepage": "https://github.com/pakka-papad/ChitBlocks-backend#readme",
   "dependencies": {
     "cors": "^2.8.5",
-    "dotenv": "^14.2.0",
+    "dotenv": "^14.3.2",
     "express": "^4.17.2",
     "mongoose": "^6.1.7",
     "socket.io": "^4.4.1"
