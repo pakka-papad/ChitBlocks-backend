@@ -1,21 +1,30 @@
 const http = require('http').createServer();
 const {removeUser, getRoomId, addUser, getMaxBid} = require('./auctionData');
+const axios = require('axios');
 
 const io = require('socket.io')(http, {
     cors: { origin: "*" }
 });
 
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
     console.log('a user connected');
 
-    socket.on('join-room', (userId) => {
+    socket.on('join-room', async (userId) => {
 
+        console.log('lhlkjlj,mn,mn')
         let validUser = false;
         let groupId = "";
-        /**
-         * Check if user present in Mongodb
-         * And if present get groupId of user
-         */
+        
+        const users = await axios.get('http://localhost/3001/users')
+        .then( res => {
+            res.data.foreach(item => {
+                if(item.userAcc == userId){
+                    validUser = true;
+                    groupId = item.groupId;
+                }
+            });
+        })
+
         if(validUser){
             addUser({
                 id: userId,
