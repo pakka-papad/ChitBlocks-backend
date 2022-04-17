@@ -1,4 +1,5 @@
 const userRouter = require('express').Router()
+const { response } = require('express')
 const User = require('../models/users')
 
 let userArray = []
@@ -9,15 +10,24 @@ userRouter.get('/', (request, response) => {
   })
 })
 
+userRouter.get('/:id', (request, response) => {
+  User.findById(request.params.id)
+  .then(user => {
+    if (user) {
+      response.json(user)
+    } else {
+      response.status(404).end()
+    }
+  })
+  .catch(error => next(error))
+})
+
 userRouter.post('/', (request, response, next) => {
   const body = request.body
   var isPresent = false
   User.find({}).then(users => {
     userArray = users
     userArray.map(item => {
-      console.log('item.userAcc', item.userAcc);
-      console.log('body.userAcc', body.userAcc);
-      console.log(item.userAcc == body.userAcc);
 
       if (item.userAcc == body.userAcc) { isPresent = true; }
     })
@@ -39,6 +49,19 @@ userRouter.post('/', (request, response, next) => {
       }
     }
   )
+
+  userRouter.get('/:id', (request, response) => {
+    User.findById(request.params.id)
+    .then(user => {
+      if (user) {
+        response.json(user)
+      } else {
+        response.status(404).end()
+      }
+    })
+    .catch(error => next(error))
+  })
+  
 
 })
 

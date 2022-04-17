@@ -18,6 +18,5 @@ const user = new User({
 })
 
 user.save().then(result => {
-  console.log('user saved!')
   mongoose.connection.close()
 })
